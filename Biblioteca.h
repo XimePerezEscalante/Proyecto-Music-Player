@@ -129,11 +129,14 @@ template <class T>
 std::string Biblioteca<T>::toString() {
     std::stringstream aux;
 
-    aux << "[" << canciones[0].getArtista();
+    aux << canciones[0].getTitulo() << " - " <<
+    canciones[0].getArtista() << " - " << canciones[0].getGenero()
+    << " - " << canciones[0].getDuracion();
     for (unsigned int i = 1; i < numCanciones; i++) {
-        aux << ", " << canciones[i].getArtista();
+        aux << "\n" << canciones[i].getTitulo() << " - " <<
+        canciones[i].getArtista() << " - " << canciones[i].getGenero()
+        << " - " << canciones[i].getDuracion();
     }
-    aux << "]";
     return aux.str();
 }
 
