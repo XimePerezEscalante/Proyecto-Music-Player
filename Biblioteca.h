@@ -137,6 +137,7 @@ std::string Biblioteca<T>::toString() {
         canciones[i].getArtista() << " - " << canciones[i].getGenero()
         << " - " << canciones[i].getDuracion();
     }
+    aux << "\n";
     return aux.str();
 }
 
@@ -144,6 +145,7 @@ template <class T>
 void Biblioteca<T>::ordenArtista(){
     std::vector<T> aux(canciones);
     std::vector<T> tmp(numCanciones);
+    std::cout << "Orden Alfabético por Artista" << "\n" <<std::endl;
 
     mergeSplit(aux, tmp, 0, numCanciones - 1, 1);
 }
@@ -152,6 +154,7 @@ template <class T>
 void Biblioteca<T>::ordenGenero(){
     std::vector<T> aux(canciones);
     std::vector<T> tmp(numCanciones);
+    std::cout << "Orden Alfabético por Género" << "\n" <<std::endl;
 
     mergeSplit(aux, tmp, 0, numCanciones - 1, 2);
 }
@@ -160,10 +163,10 @@ template <class T>
 void Biblioteca<T>::ordenDuracion(){
     std::vector<T> aux(canciones);
     std::vector<T> tmp(numCanciones);
+    std::cout << "Duración de Menor a Mayor" << "\n" <<std::endl;
 
     mergeSplit(aux, tmp, 0, numCanciones - 1, 3);
 }
-
 
 #endif /* Biblioteca_h */
 
