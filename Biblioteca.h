@@ -41,7 +41,8 @@ Biblioteca<T>::Biblioteca(std::vector<T> songs){
 
 
 template <class T>
-void Biblioteca<T>::copy(std::vector<T> &source, std::vector<T> &temp, int low, int high) {
+void Biblioteca<T>::copy(std::vector<T> &source, 
+std::vector<T> &temp, int low, int high) {
     for (int i = low; i <= high; i++) {
         source[i] = temp[i];
     }
@@ -63,7 +64,8 @@ void Biblioteca<T>::ordenArtista(std::string artist){
 }
 
 template <class T>
-void Biblioteca<T>::merge(std::vector<T> &original, std::vector<T> &temp, int low, int mid, int high) {
+void Biblioteca<T>::merge(std::vector<T> &original, 
+std::vector<T> &temp, int low, int mid, int high) {
     int i = low;
     int j = mid + 1;
     int k = low;
@@ -94,7 +96,8 @@ void Biblioteca<T>::merge(std::vector<T> &original, std::vector<T> &temp, int lo
 }
 
 template <class T>
-void Biblioteca<T>::mergeSplit(std::vector<T> &original, std::vector<T> &temp, int low, int high) {
+void Biblioteca<T>::mergeSplit(std::vector<T> &original, 
+std::vector<T> &temp, int low, int high) {
     int mid;
 
     if ( (high - low) < 1 ) {
