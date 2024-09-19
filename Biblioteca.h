@@ -43,9 +43,9 @@ Biblioteca<T>::Biblioteca(std::vector<T> songs){
 
 
 template <class T>
-void Biblioteca<T>::copy(std::vector<T> &source, std::vector<T> &temp, int low, int high) {
+void Biblioteca<T>::copy(std::vector<T> &original, std::vector<T> &temp, int low, int high) {
     for (int i = low; i <= high; i++) {
-        source[i] = temp[i];
+        original[i] = temp[i];
     }
 }
 
