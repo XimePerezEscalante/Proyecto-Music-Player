@@ -65,7 +65,7 @@ void Biblioteca<T>::merge(std::vector<T> &original, std::vector<T> &temp, int lo
     while (i <= mid && j <= high) {
         if (option == 1){
             
-            if (original[i].getArtista() < original[j].getArtista()) {
+            if (original[i].getArtista() <= original[j].getArtista()) {
                 temp[k] = original[i];
                 i++;
             }
@@ -148,6 +148,7 @@ void Biblioteca<T>::ordenArtista(){
     std::cout << "Orden Alfabético por Artista" << "\n" <<std::endl;
 
     mergeSplit(aux, tmp, 0, numCanciones - 1, 1);
+    canciones = aux;
 }
 
 template <class T>
@@ -157,6 +158,7 @@ void Biblioteca<T>::ordenGenero(){
     std::cout << "Orden Alfabético por Género" << "\n" <<std::endl;
 
     mergeSplit(aux, tmp, 0, numCanciones - 1, 2);
+    canciones = aux;
 }
 
 template <class T>
@@ -166,7 +168,8 @@ void Biblioteca<T>::ordenDuracion(){
     std::cout << "Duración de Menor a Mayor" << "\n" <<std::endl;
 
     mergeSplit(aux, tmp, 0, numCanciones - 1, 3);
+    canciones = aux;
 }
 
-#endif /* Biblioteca_h */
 
+#endif /* Biblioteca_h */
