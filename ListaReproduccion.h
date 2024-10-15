@@ -21,6 +21,7 @@ public:
     void agregarCancion(Cancion);
     void eliminarCancion(Cancion);
     void saltarCancion();
+    void reproducir();
 };
 
 template <class T>
@@ -52,6 +53,11 @@ void ListaReproduccion<T>::eliminarCancion(Cancion eliminada){
 template <class T>
 void ListaReproduccion<T>::saltarCancion(){
     listaCanciones.pop();
+}
+
+template <class T>
+void ListaReproduccion<T>::reproducir(){
+    std::cout << "Reproduciendo " << listaCanciones.front().titulo << " - " << listaCanciones.front().artista << std::endl;
 }
 
 #endif /* ListaReproduccion_h */
