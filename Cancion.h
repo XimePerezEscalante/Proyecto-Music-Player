@@ -1,6 +1,8 @@
 #ifndef Cancion_h
 #define Cancion_h
 
+template <class T>
+class ListaReproduccion;
 
 class Cancion{
     private:
@@ -16,6 +18,8 @@ public:
     std::string getArtista(){return artista;};
     std::string getGenero(){return genero;};
     float getDuracion(){return duracion;};
+    
+    friend class ListaReproduccion<Cancion>;
 };
 
 
