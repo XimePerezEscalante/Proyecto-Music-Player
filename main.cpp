@@ -18,17 +18,28 @@ int main(int argc, const char * argv[]) {
     
     Biblioteca<Cancion> bibliotecaUsuario(listaCanciones);
     
-    bibliotecaUsuario.ordenArtista();
+    std::cout << "XPE - Reproductor de Música:\n1. Ordenar por Artista\n2. Ordenar por Género\n3. Ordenar por Duración\n4. Crear Lista de Reproducción" << std::endl;
     
-    std::cout << bibliotecaUsuario.toString() << std::endl;
+    std::cin >> opcion;
     
-    bibliotecaUsuario.ordenGenero();
+    if (opcion == 1){
+        bibliotecaUsuario.ordenArtista();
+        
+        std::cout << bibliotecaUsuario.toString() << std::endl;
+    }
     
-    std::cout << bibliotecaUsuario.toString() << std::endl;
+    else if (opcion == 2){
+        bibliotecaUsuario.ordenGenero();
+        
+        std::cout << bibliotecaUsuario.toString() << std::endl;
+    }
     
-    bibliotecaUsuario.ordenDuracion();
+    else if (opcion == 3){
+        bibliotecaUsuario.ordenDuracion();
+        
+        std::cout << bibliotecaUsuario.toString() << std::endl;
+    }
     
-    std::cout << bibliotecaUsuario.toString() << std::endl;
     
     return 0;
 }
