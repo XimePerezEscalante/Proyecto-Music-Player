@@ -40,6 +40,10 @@ int main(int argc, const char * argv[]) {
         std::cout << bibliotecaUsuario.toString() << std::endl;
     }
     
-    
+    else{
+        Cancion song("Midnight Cowboy", "Jade", "Pop", 3.31);
+        ListaReproduccion<Cancion> lista(song);
+        lista.reproducir();
+    }
     return 0;
 }
