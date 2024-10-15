@@ -2,6 +2,7 @@
 #define Biblioteca_h
 
 #include "Cancion.h"
+#include "ListaReproduccion.h"
 #include <vector>
 #include <sstream>
 #include <cstring>
