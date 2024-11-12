@@ -1,111 +1,195 @@
+//
+//  Biblioteca.h
+//  MusicPlayer
+//
+//  Created by Ximena Perez Escalante on 18/09/24.
+//
+
 #ifndef Biblioteca_h
 #define Biblioteca_h
 
 #include "Cancion.h"
 #include "ListaReproduccion.h"
+
+#include <string>
 #include <vector>
 #include <sstream>
 #include <cstring>
+#include <cctype>
 
 template <class T>
-class Biblioteca{
+class Biblioteca
+{
 private:
     int numCanciones;
-    std::vector<T> canciones;
-    
-    void swap(std::vector<T>&, int, int);
-    void copy(std::vector<T>&, std::vector<T>&, int, int);
-    void merge(std::vector<T>&, std::vector<T>&, int, int, int, int);
-    void mergeSplit(std::vector<T>&, std::vector<T>&, int, int, int);
+    std::vector<T> canciones;                    // Vector con canciones
+    std::vector<ListaReproduccion<T> > Playlists; // Vector con playlists
+    int untitledPlaylists;
+
+    // Funciones para hacer Merge Sort
+    void swap(std::vector<T> &, int, int);
+    void copy(std::vector<T> &, std::vector<T> &, int, int);
+    void merge(std::vector<T> &, std::vector<T> &, int, int, int, int);
+    void mergeSplit(std::vector<T> &, std::vector<T> &, int, int, int);
+
 public:
     Biblioteca();
     Biblioteca(std::vector<T>);
-    
+
+    std::string modifyString(std::string);
+
     void ordenArtista();
     void ordenGenero();
     void ordenDuracion();
-    
+
     void agregaCancion(Cancion);
-    void eliminaCancion(Cancion);
-    
+    void eliminaCancion(int);
+
+    // Getter
+    Cancion getCancion(int index) { return canciones[index - 1]; }
+
+    void crearPlaylist(std::string);
+
+    // ListaReproduccion<Cancion> getPlaylist(int n){return Playlists[n];};
+
     std::string toString();
 };
 
 template <class T>
-Biblioteca<T>::Biblioteca(){
+Biblioteca<T>::Biblioteca()
+{
     numCanciones = 0;
 }
 
 template <class T>
-Biblioteca<T>::Biblioteca(std::vector<T> songs){
+Biblioteca<T>::Biblioteca(std::vector<T> songs)
+{
     numCanciones = songs.size();
     canciones = songs;
 }
 
+template <class T>
+void Biblioteca<T>::agregaCancion(Cancion song)
+{
+    canciones.push_back(song);
+    numCanciones++;
+
+    std::cout << "Canción agregada:" << std::endl;
+    std::cout << toString() << std::endl;
+}
 
 template <class T>
-void Biblioteca<T>::copy(std::vector<T> &original, std::vector<T> &temp, int low, int high) {
-    for (int i = low; i <= high; i++) {
+void Biblioteca<T>::eliminaCancion(int song)
+{
+    canciones.erase(canciones.begin() + (song - 1)); // iterador al index de la canción
+    numCanciones--;
+
+    std::cout << "Canción eliminada" << std::endl;
+    std::cout << toString() << std::endl;
+}
+
+// Convertir string a minúsculas
+template <class T>
+std::string Biblioteca<T>::modifyString(std::string word)
+{
+    for (int i = 0; i < word.length(); i++)
+    {
+        word[i] = tolower(word[i]);
+    }
+    return word;
+}
+
+template <class T>
+void Biblioteca<T>::copy(std::vector<T> &original, std::vector<T> &temp, int low, int high)
+{
+    for (int i = low; i <= high; i++)
+    {
         original[i] = temp[i];
     }
 }
 
 template <class T>
-void Biblioteca<T>::swap(std::vector<T> &v, int i, int j) {
+void Biblioteca<T>::swap(std::vector<T> &v, int i, int j)
+{
     T aux = v[i];
     v[i] = v[j];
     v[j] = aux;
 }
 
 template <class T>
-void Biblioteca<T>::merge(std::vector<T> &original, std::vector<T> &temp, int low, int mid, int high,int option) {
+void Biblioteca<T>::merge(std::vector<T> &original, std::vector<T> &temp, int low, int mid, int high, int option)
+{
     int i = low;
     int j = mid + 1;
     int k = low;
 
-    while (i <= mid && j <= high) {
-        if (option == 1){
-            
-            if (original[i].getArtista() <= original[j].getArtista()) {
+    while (i <= mid && j <= high)
+    {
+        // Ordenar por artista
+        if (option == 1)
+        {
+            // Crear una copia del string en minúsculas para la comparación
+            std::string minusculasI = modifyString(original[i].getArtista());
+            std::string minusculasJ = modifyString(original[j].getArtista());
+
+            if (minusculasI <= minusculasJ)
+            {
                 temp[k] = original[i];
                 i++;
             }
-            else {
+            else
+            {
                 temp[k] = original[j];
                 j++;
             }
         }
-        else if (option == 2){
-            if (original[i].getGenero() < original[j].getGenero()) {
+        // Ordenar por género
+        else if (option == 2)
+        {
+            // Crear una copia del string en minúsculas para la comparación
+            std::string minusculasI = modifyString(original[i].getGenero());
+            std::string minusculasJ = modifyString(original[j].getGenero());
+
+            if (minusculasI < minusculasJ)
+            {
                 temp[k] = original[i];
                 i++;
             }
-            else {
+            else
+            {
                 temp[k] = original[j];
                 j++;
             }
         }
-        else{
-            if (original[i].getDuracion() < original[j].getDuracion()) {
+        // Ordenar por duración
+        else if (option == 3)
+        {
+            if (original[i].getDuracion() < original[j].getDuracion())
+            {
                 temp[k] = original[i];
                 i++;
             }
-            else {
+            else
+            {
                 temp[k] = original[j];
                 j++;
             }
         }
         k++;
     }
-    
-    if (i > mid) {
-        for (; j <= high; j++) {
+
+    if (i > mid)
+    {
+        for (; j <= high; j++)
+        {
             temp[k++] = original[j];
         }
     }
-    
-    else {
-        for (; i <= mid; i++) {
+
+    else
+    {
+        for (; i <= mid; i++)
+        {
             temp[k++] = original[i];
         }
     }
@@ -113,10 +197,12 @@ void Biblioteca<T>::merge(std::vector<T> &original, std::vector<T> &temp, int lo
 
 template <class T>
 void Biblioteca<T>::mergeSplit(std::vector<T> &original,
-                               std::vector<T> &temp, int low, int high, int option) {
+                               std::vector<T> &temp, int low, int high, int option)
+{
     int mid;
 
-    if ( (high - low) < 1 ) {
+    if ((high - low) < 1)
+    {
         return;
     }
     mid = (high + low) / 2;
@@ -127,49 +213,91 @@ void Biblioteca<T>::mergeSplit(std::vector<T> &original,
 }
 
 template <class T>
-std::string Biblioteca<T>::toString() {
+std::string Biblioteca<T>::toString()
+{
     std::stringstream aux;
 
-    aux << canciones[0].getTitulo() << " - " <<
-    canciones[0].getArtista() << " - " << canciones[0].getGenero()
-    << " - " << canciones[0].getDuracion();
-    for (unsigned int i = 1; i < numCanciones; i++) {
-        aux << "\n" << canciones[i].getTitulo() << " - " <<
-        canciones[i].getArtista() << " - " << canciones[i].getGenero()
-        << " - " << canciones[i].getDuracion();
+    for (unsigned int i = 0; i < numCanciones; i++)
+    {
+        aux << i + 1 << ". " << canciones[i].imprimirCancion() << "\n";
     }
     aux << "\n";
     return aux.str();
 }
 
 template <class T>
-void Biblioteca<T>::ordenArtista(){
+void Biblioteca<T>::ordenArtista()
+{
     std::vector<T> aux(canciones);
     std::vector<T> tmp(numCanciones);
-    std::cout << "Orden Alfabético por Artista" << "\n" <<std::endl;
+    std::cout << "Orden Alfabetico por Artista" << "\n"
+              << std::endl;
 
     mergeSplit(aux, tmp, 0, numCanciones - 1, 1);
     canciones = aux;
 }
 
 template <class T>
-void Biblioteca<T>::ordenGenero(){
+void Biblioteca<T>::ordenGenero()
+{
     std::vector<T> aux(canciones);
     std::vector<T> tmp(numCanciones);
-    std::cout << "Orden Alfabético por Género" << "\n" <<std::endl;
+    std::cout << "Orden Alfabetico por Género" << "\n"
+              << std::endl;
 
     mergeSplit(aux, tmp, 0, numCanciones - 1, 2);
     canciones = aux;
 }
 
 template <class T>
-void Biblioteca<T>::ordenDuracion(){
+void Biblioteca<T>::ordenDuracion()
+{
     std::vector<T> aux(canciones);
     std::vector<T> tmp(numCanciones);
-    std::cout << "Duración de Menor a Mayor" << "\n" <<std::endl;
+    std::cout << "Duracion de Menor a Mayor" << "\n"
+              << std::endl;
 
     mergeSplit(aux, tmp, 0, numCanciones - 1, 3);
     canciones = aux;
+}
+
+template <class T>
+void Biblioteca<T>::crearPlaylist(std::string nameP)
+{
+
+    /*Si no dan un nombre crearla por omisión
+     y al final agregarle al nombre la variable
+     untitledPlaylists - 1
+     */
+    if (nameP.size() == 0)
+    {
+        untitledPlaylists++;
+
+        if (untitledPlaylists > 1)
+        {
+            ListaReproduccion<T> nueva("Sin Titulo " + std::to_string(untitledPlaylists - 1));
+            Playlists.push_back(nueva);
+        }
+        else
+        {
+            ListaReproduccion<T> nueva;
+            Playlists.push_back(nueva);
+        }
+    }
+    else
+    {
+        ListaReproduccion<T> nueva(nameP);
+        Playlists.push_back(nueva);
+    }
+
+    // Ver que se creen de forma correcta
+    std::cout << "Nueva Lista de Reproduccion:\n"
+              << Playlists.back().getNombre() << " con " << Playlists.back().getNumCanciones() << " canciones." << std::endl;
+
+    for (int i = 0; i < Playlists.size(); i++)
+    {
+        Playlists[i].reproducir();
+    }
 }
 
 
