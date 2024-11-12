@@ -2,8 +2,28 @@
 #include <vector>
 #include <sstream>
 #include <cstring>
+#include <fstream>
+
 #include "Biblioteca.h"
 
+Cancion crearCancion()
+{
+    std::string name;
+    std::string artist;
+    std::string genre;
+    float length;
+    std::cout << "Por favor introduce guion bajo en lugar de espacios" << std::endl;
+    std::cout << "Nombre: ";
+    std::cin >> name;
+    std::cout << "Artista: ";
+    std::cin >> artist;
+    std::cout << "Género: ";
+    std::cin >> genre;
+    std::cout << "Duración: ";
+    std::cin >> length;
+
+    return Cancion(name, artist, genre, length);
+}
 
 int main(int argc, const char * argv[]) {
     std::vector<Cancion> listaCanciones = {Cancion("Beloved","Celeste","Baladas",3.58),
