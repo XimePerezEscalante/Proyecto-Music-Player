@@ -228,37 +228,52 @@ std::string Biblioteca<T>::toString()
 template <class T>
 void Biblioteca<T>::ordenArtista()
 {
-    std::vector<T> aux(canciones);
-    std::vector<T> tmp(numCanciones);
-    std::cout << "Orden Alfabetico por Artista" << "\n"
-              << std::endl;
-
-    mergeSplit(aux, tmp, 0, numCanciones - 1, 1);
-    canciones = aux;
+    if (numCanciones > 0){
+        std::vector<T> aux(canciones);
+        std::vector<T> tmp(numCanciones);
+        std::cout << "Orden Alfabetico por Artista" << "\n"
+        << std::endl;
+        
+        mergeSplit(aux, tmp, 0, numCanciones - 1, 1);
+        canciones = aux;
+    }
+    else{
+        std::cout << "No hay canciones en tu biblioteca" << std::endl;
+    }
 }
 
 template <class T>
 void Biblioteca<T>::ordenGenero()
 {
-    std::vector<T> aux(canciones);
-    std::vector<T> tmp(numCanciones);
-    std::cout << "Orden Alfabetico por Género" << "\n"
-              << std::endl;
-
-    mergeSplit(aux, tmp, 0, numCanciones - 1, 2);
-    canciones = aux;
+    if (numCanciones > 0){
+        std::vector<T> aux(canciones);
+        std::vector<T> tmp(numCanciones);
+        std::cout << "Orden Alfabetico por Género" << "\n"
+        << std::endl;
+        
+        mergeSplit(aux, tmp, 0, numCanciones - 1, 2);
+        canciones = aux;
+    }
+    else{
+        std::cout << "No hay canciones en tu biblioteca" << std::endl;
+    }
 }
 
 template <class T>
 void Biblioteca<T>::ordenDuracion()
 {
-    std::vector<T> aux(canciones);
-    std::vector<T> tmp(numCanciones);
-    std::cout << "Duracion de Menor a Mayor" << "\n"
-              << std::endl;
-
-    mergeSplit(aux, tmp, 0, numCanciones - 1, 3);
-    canciones = aux;
+    if (numCanciones > 0){
+        std::vector<T> aux(canciones);
+        std::vector<T> tmp(numCanciones);
+        std::cout << "Duracion de Menor a Mayor" << "\n"
+        << std::endl;
+        
+        mergeSplit(aux, tmp, 0, numCanciones - 1, 3);
+        canciones = aux;
+    }
+    else{
+        std::cout << "No hay canciones en tu biblioteca" << std::endl;
+    }
 }
 
 template <class T>
