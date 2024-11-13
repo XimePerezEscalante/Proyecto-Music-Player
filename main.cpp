@@ -182,7 +182,15 @@ int main(int argc, const char *argv[])
     
     std::cout << "¡Bienvenid@!\nIngresa un nombre de usuario: ";
     std::cin >> nombreUsuario;
+
+    // Cargar archivos para crear la librería predeterminada
     leerArchivos(bibliotecaUsuario);
+    
+    std::cout << "\nXPE - Reproductor de Música:\nSe cargó la librería predeterminada" << std::endl;
+    
+    acciones(preguntar(),bibliotecaUsuario);
+    
+    std::cout << "¡Hasta luego " << nombreUsuario << "!" << std::endl;
 
     // Abrir archivo de texto
     std::ofstream MyFile("Biblioteca.txt");
