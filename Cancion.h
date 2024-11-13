@@ -11,9 +11,6 @@
 #include <iostream>
 #include <sstream>
 
-// template <class T>
-// class FilaReproduccion;
-
 template <class T>
 class ListaReproduccion;
 
@@ -39,7 +36,6 @@ public:
     std::string imprimirCancion();
 
     friend class ListaReproduccion<Cancion>;
-    // friend class FilaReproduccion<Cancion>;
 };
 
 // Constructor por omisión
