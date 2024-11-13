@@ -25,30 +25,18 @@ Cancion crearCancion()
     return Cancion(name, artist, genre, length);
 }
 
-int main(int argc, const char * argv[]) {
-int main(int argc, const char *argv[])
+Cancion crearCancion(std::string name, std::string artist, std::string genre, float length)
+{
+    Cancion song(name, artist, genre, length);
+    std::cout << song.imprimirCancion() << std::endl;
+    return song;
+}
+
+int preguntar()
 {
     int opcion;
-    std::string nombreUsuario;
 
-    Biblioteca<Cancion> bibliotecaUsuario = Biblioteca<Cancion>();
-
-    std::cout << bibliotecaUsuario.toString() << std::endl;
-
-    bibliotecaUsuario.ordenGenero();
-
-    std::cout << bibliotecaUsuario.toString() << std::endl;
-
-    bibliotecaUsuario.ordenDuracion();
-
-    std::cout << bibliotecaUsuario.toString() << std::endl;
-
-    std::cout << "XPE - Reproductor de Música:\n1. Buscar por Artista\n2. Buscar por Género\n3. Buscar por Duración\n4. Agregar canción\n5. Eliminar canción" << std::endl;*/
-
-    std::cout << "¡Bienvenid@!\nIngresa un nombre de usuario: ";
-    std::cin >> nombreUsuario;
-    
-    std::cout << "\nXPE - Reproductor de Música:\n1. Ordenar por Artista\n2. Ordenar por Género\n3. Ordenar por Duración\n4. Agregar canción\n5. Eliminar canción\n6. Crear Lista de Reproducción" << std::endl;
+    std::cout << "1. Ordenar por Artista\n2. Ordenar por Género\n3. Ordenar por Duración\n4. Agregar canción\n5. Eliminar canción\n6. Crear Lista de Reproducción" << std::endl;
 
     std::cin >> opcion;
 
@@ -58,102 +46,152 @@ int main(int argc, const char *argv[])
         std::cin >> opcion;
     }
 
-    if (opcion == 1)
+    return opcion;
+}
+
+void acciones(int opcion, Biblioteca<Cancion> &bibUsuario)
+{
+
+    while (opcion >= 1 && opcion <= 6)
     {
-        bibliotecaUsuario.ordenArtista();
 
-        std::cout << bibliotecaUsuario.toString() << std::endl;
-    }
-
-    else if (opcion == 2)
-    {
-        bibliotecaUsuario.ordenGenero();
-
-        std::cout << bibliotecaUsuario.toString() << std::endl;
-    }
-
-    else if (opcion == 3)
-    {
-        bibliotecaUsuario.ordenDuracion();
-
-        std::cout << bibliotecaUsuario.toString() << std::endl;
-    }
-
-    else if (opcion == 4)
-    {
-        bibliotecaUsuario.agregaCancion(crearCancion());
-        bibliotecaUsuario.toString();
-    }
-
-    else if (opcion == 5)
-    {
-        int song;
-        std::cout << "Eliminar cancion: " << std::endl;
-        std::cout << bibliotecaUsuario.toString() << std::endl;
-        std::cout << "Escoge el numero de la cancion: " << std::endl;
-        std::cin >> song;
-        bibliotecaUsuario.eliminaCancion(song);
-    }
-
-    else if (opcion == 6)
-    {
-        // Variables de input
-        int opc;
-        int opc2;
-
-        std::cout << "Crear Lista de Reproduccion:\n1. Crear (Sin nombre)\n2. Cambiar nombre" << std::endl;
-        std::cin >> opc;
-        while (opc < 1 || opc > 2)
+        if (opcion == 1)
         {
-            std::cout << "Escoge una opcion (1 o 2)" << std::endl;
+            bibUsuario.ordenArtista();
+
+            std::cout << bibUsuario.toString() << std::endl;
+        }
+
+        else if (opcion == 2)
+        {
+            bibUsuario.ordenGenero();
+
+            std::cout << bibUsuario.toString() << std::endl;
+        }
+
+        else if (opcion == 3)
+        {
+            bibUsuario.ordenDuracion();
+
+            std::cout << bibUsuario.toString() << std::endl;
+        }
+
+        else if (opcion == 4)
+        {
+            bibUsuario.agregaCancion(crearCancion());
+            bibUsuario.toString();
+        }
+
+        else if (opcion == 5)
+        {
+            int song;
+            std::cout << "Eliminar cancion: " << std::endl;
+            std::cout << bibUsuario.toString() << std::endl;
+            std::cout << "Escoge el numero de la cancion: " << std::endl;
+            std::cin >> song;
+            bibUsuario.eliminaCancion(song);
+        }
+
+        else if (opcion == 6)
+        {
+            // Variables de input
+            int opc;
+            int opc2;
+
+            std::cout << "Crear Lista de Reproduccion:\n1. Crear (Sin nombre)\n2. Cambiar nombre" << std::endl;
             std::cin >> opc;
-        }
+            while (opc < 1 || opc > 2)
+            {
+                std::cout << "Escoge una opcion (1 o 2)" << std::endl;
+                std::cin >> opc;
+            }
 
-        std::cout << "Agregar canciones:\n 1. De tu biblioteca\n2. Nueva cancion\n3. Lista de Reproduccion vacia" << std::endl;
-        std::cin >> opc2;
+            std::cout << "Agregar canciones:\n 1. De tu biblioteca\n2. Nueva cancion\n3. Lista de Reproduccion vacia" << std::endl;
+            std::cin >> opc2;
 
-        while (opc < 1 || opc > 2)
-        {
-            std::cout << "Escoge una opcion (1 o 2)" << std::endl;
-            std::cin >> opc;
-        }
+            while (opc < 1 || opc > 2)
+            {
+                std::cout << "Escoge una opcion (1 o 2)" << std::endl;
+                std::cin >> opc;
+            }
 
-        if (opc == 1)
-        {
-            if (opc2 == 1)
+            if (opc == 1)
             {
+                if (opc2 == 1)
+                {
+                }
+                else if (opc2 == 2)
+                {
+                }
+                else if (opc2 == 3)
+                {
+                    bibUsuario.crearPlaylist("");
+                }
             }
-            else if (opc2 == 2)
+            else if (opc == 2)
             {
-            }
-            else if (opc2 == 3)
-            {
-                bibliotecaUsuario.crearPlaylist("");
-            }
-        }
-        else if (opc == 2)
-        {
-            if (opc2 == 1)
-            {
-            }
-            else if (opc2 == 2)
-            {
-            }
-            else if (opc2 == 3)
-            {
-                bibliotecaUsuario.crearPlaylist("nombreinput");
+                if (opc2 == 1)
+                {
+                }
+                else if (opc2 == 2)
+                {
+                }
+                else if (opc2 == 3)
+                {
+                    bibUsuario.crearPlaylist("nombreinput");
+                }
             }
         }
     }
+}
+
+void leerArchivos(Biblioteca<Cancion> &bibUsuario)
+{
+    // Strings que se usarán en el output del archivo de texto
+    std::string dur; //duracion
+    std::string name;
+    std::string artist;
+    std::string genre;
+    float length;
+
+    // Leer archivos
+    std::ifstream DuracionArchivo("Duraciones.txt");
+    std::ifstream Artists("Artistas.txt");
+    std::ifstream Genres("Generos.txt");
+    std::ifstream Songs("Canciones.txt");
+
+    // While loop con getline() para leer el archivo línea por línea
+    while (getline(DuracionArchivo, dur) && getline(Artists, artist) && getline(Genres, genre) && getline(Songs, name))
+    {
+        length = std::stof(dur);
+        bibUsuario.agregaCancion(crearCancion(name, artist, genre, length));
+    }
+
+    // Cerrar archivos
+    DuracionArchivo.close();
+    Artists.close();
+    Genres.close();
+    Songs.close();
+}
+
+int main(int argc, const char *argv[])
+{
+    int opcion;
+    std::string nombreUsuario;
+    Biblioteca<Cancion> bibliotecaUsuario = Biblioteca<Cancion>();
     
-    //Abrir archivo de texto
+    std::cout << "¡Bienvenid@!\nIngresa un nombre de usuario: ";
+    std::cin >> nombreUsuario;
+    leerArchivos(bibliotecaUsuario);
+
+    // Abrir archivo de texto
     std::ofstream MyFile("Biblioteca.txt");
 
-      //Escribir en el archivo
+    // Escribir en el archivo
     MyFile << "Biblioteca Musical de " << nombreUsuario << "\n\n";
     MyFile << bibliotecaUsuario.toString() << "\n";
 
-      //Cerrar el archivo
-      MyFile.close();
+    // Cerrar el archivo
+    MyFile.close();
     return 0;
 }
