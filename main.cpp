@@ -28,7 +28,6 @@ Cancion crearCancion()
 Cancion crearCancion(std::string name, std::string artist, std::string genre, float length)
 {
     Cancion song(name, artist, genre, length);
-    std::cout << song.imprimirCancion() << std::endl;
     return song;
 }
 
