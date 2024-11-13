@@ -50,8 +50,6 @@ public:
 
     void crearPlaylist(std::string);
 
-    // ListaReproduccion<Cancion> getPlaylist(int n){return Playlists[n];};
-
     std::string toString();
 };
 
@@ -75,7 +73,7 @@ void Biblioteca<T>::agregaCancion(Cancion song)
     numCanciones++;
 
     std::cout << "Canción agregada:" << std::endl;
-    std::cout << toString() << std::endl;
+    std::cout << song.imprimirCancion() << std::endl;
 }
 
 template <class T>
