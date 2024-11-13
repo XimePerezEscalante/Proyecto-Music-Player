@@ -36,7 +36,7 @@ int preguntar()
 {
     int opcion;
 
-    std::cout << "1. Ordenar por Artista\n2. Ordenar por Género\n3. Ordenar por Duración\n4. Agregar canción\n5. Eliminar canción\n6. Crear Lista de Reproducción" << std::endl;
+    std::cout << "1. Ordenar por Artista\n2. Ordenar por Género\n3. Ordenar por Duración\n4. Agregar canción\n5. Eliminar canción\n6. Crear Lista de Reproducción\n7. Salir"" << std::endl;
 
     std::cin >> opcion;
 
@@ -142,6 +142,7 @@ void acciones(int opcion, Biblioteca<Cancion> &bibUsuario)
                 }
             }
         }
+        opcion = preguntar();
     }
 }
 
