@@ -10,7 +10,6 @@
 
 #include "Cancion.h"
 #include "ListaReproduccion.h"
-#include "Playlist.h"
 #include "Reproductor.h"
 
 #include <string>
