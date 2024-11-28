@@ -21,7 +21,7 @@ Para el algoritmo de merge sort se utilizaron las siguientes funciones:
 * ordenArtista / ordenGenero / ordenDuracion: O(n log n) porque manda a llamar a mergeSplit, así que tienen la misma complejidad.
 Demás funciones de Biblioteca:
 * eliminaCancion y agregaCancion: O(1) porque se usan las funciones de la biblioteca vector.
-* modifyString:
+* modifyString: O(n) porque recorre todo el string.
 ## SICT0302B: Toma decisiones
 ### Implementa mecanismos para consultar información de las estructras correctos
 Se usan los getters de Cancion, friend class para acceder a los atributos privados y en el caso de mostrar información, los métodos toString().
