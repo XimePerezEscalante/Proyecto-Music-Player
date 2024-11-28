@@ -1,3 +1,10 @@
+//
+//  main.cpp
+//  MusicPlayer
+//
+//  Created by Ximena Perez Escalante on 18/09/24.
+//
+
 #include <iostream>
 #include <vector>
 #include <sstream>
@@ -6,19 +13,33 @@
 
 #include "Biblioteca.h"
 
+std::string modifyString(std::string word)
+{
+    for (int i = 0; i < word.length(); i++)
+    {
+        if (word[i] == '_')
+        {
+            word[i] = ' ';
+        }
+    }
+    return word;
+}
+
 Cancion crearCancion()
 {
     std::string name;
     std::string artist;
     std::string genre;
     float length;
-    std::cout << "Por favor introduce guion bajo en lugar de espacios" << std::endl;
-    std::cout << "Nombre: ";
+    std::cout << "Por favor introduce guion bajo en lugar de espacios\nNombre: ";
     std::cin >> name;
+    name = modifyString(name);
     std::cout << "Artista: ";
     std::cin >> artist;
+    artist = modifyString(artist);
     std::cout << "Género: ";
     std::cin >> genre;
+    genre = modifyString(genre);
     std::cout << "Duración: ";
     std::cin >> length;
 
@@ -28,6 +49,7 @@ Cancion crearCancion()
 Cancion crearCancion(std::string name, std::string artist, std::string genre, float length)
 {
     Cancion song(name, artist, genre, length);
+    //std::cout << song.imprimirCancion() << std::endl;
     return song;
 }
 
@@ -35,13 +57,17 @@ int preguntar()
 {
     int opcion;
 
-    std::cout << "1. Ordenar por Artista\n2. Ordenar por Género\n3. Ordenar por Duración\n4. Agregar canción\n5. Eliminar canción\n6. Crear Lista de Reproducción\n7. Salir"" << std::endl;
+    std::cout << "\n\n1. Ordenar por Artista\n2. Ordenar por Género" << std::endl;
+    std::cout << "3. Ordenar por Duración\n4. Agregar canción" << std::endl;
+    std::cout << "5. Eliminar canción\n6. Reproducir" << std::endl;
+    std::cout << "7. Salir" << std::endl;
 
     std::cin >> opcion;
 
-    while (opcion < 1 || opcion > 6)
+    while (opcion < 1 || opcion > 7
+    )
     {
-        std::cout << "Escoge una opción del 1 al 6: " << std::endl;
+        std::cout << "Escoge una opción del 1 al 7: " << std::endl;
         std::cin >> opcion;
     }
 
@@ -90,59 +116,12 @@ void acciones(int opcion, Biblioteca<Cancion> &bibUsuario)
             std::cin >> song;
             bibUsuario.eliminaCancion(song);
         }
-
-        else if (opcion == 6)
-        {
-            // Variables de input
-            int opc;
-            int opc2;
-
-            std::cout << "Crear Lista de Reproduccion:\n1. Crear (Sin nombre)\n2. Cambiar nombre" << std::endl;
-            std::cin >> opc;
-            while (opc < 1 || opc > 2)
-            {
-                std::cout << "Escoge una opcion (1 o 2)" << std::endl;
-                std::cin >> opc;
-            }
-
-            std::cout << "Agregar canciones:\n 1. De tu biblioteca\n2. Nueva cancion\n3. Lista de Reproduccion vacia" << std::endl;
-            std::cin >> opc2;
-
-            while (opc < 1 || opc > 2)
-            {
-                std::cout << "Escoge una opcion (1 o 2)" << std::endl;
-                std::cin >> opc;
-            }
-
-            if (opc == 1)
-            {
-                if (opc2 == 1)
-                {
-                }
-                else if (opc2 == 2)
-                {
-                }
-                else if (opc2 == 3)
-                {
-                    bibUsuario.crearPlaylist("");
-                }
-            }
-            else if (opc == 2)
-            {
-                if (opc2 == 1)
-                {
-                }
-                else if (opc2 == 2)
-                {
-                }
-                else if (opc2 == 3)
-                {
-                    bibUsuario.crearPlaylist("nombreinput");
-                }
-            }
+        else if (opcion == 6){
+            bibUsuario.reproducir();
         }
         opcion = preguntar();
     }
+    
 }
 
 void leerArchivos(Biblioteca<Cancion> &bibUsuario)
@@ -178,17 +157,17 @@ int main(int argc, const char *argv[])
 {
     int opcion;
     std::string nombreUsuario;
+
     Biblioteca<Cancion> bibliotecaUsuario = Biblioteca<Cancion>();
     
     std::cout << "¡Bienvenid@!\nIngresa un nombre de usuario: ";
     std::cin >> nombreUsuario;
-
-    // Cargar archivos para crear la librería predeterminada
+    
     leerArchivos(bibliotecaUsuario);
     
     std::cout << "\nXPE - Reproductor de Música:\nSe cargó la librería predeterminada" << std::endl;
     
-    acciones(preguntar(),bibliotecaUsuario);
+    acciones(preguntar(), bibliotecaUsuario);
     
     std::cout << "¡Hasta luego " << nombreUsuario << "!" << std::endl;
 
@@ -201,5 +180,6 @@ int main(int argc, const char *argv[])
 
     // Cerrar el archivo
     MyFile.close();
+
     return 0;
 }
