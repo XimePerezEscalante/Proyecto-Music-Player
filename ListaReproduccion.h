@@ -8,117 +8,216 @@
 #ifndef ListaReproduccion_h
 #define ListaReproduccion_h
 
-#include <queue>
+#include "Cancion.h"
 
-template <class T>
+#include <sstream>
+#include <iostream>
+
+class ListaReproduccion;
+class Reproductor;
+
+class NodoCancion
+{
+private:
+    Cancion song;
+    NodoCancion *previous;
+    NodoCancion *next;
+
+public:
+    NodoCancion(const Cancion &);
+    friend class ListaReproduccion;
+    friend class Reproductor;
+};
+
+NodoCancion::NodoCancion(const Cancion &cancion)
+{
+    song = cancion;
+    previous = 0;
+    next = 0;
+}
+
 class ListaReproduccion
 {
 private:
-    std::string nombre;
-    int numCanciones;
-    int reproduciendo;
-    std::queue<Cancion> listaCanciones;
+    int size; 
+    NodoCancion *head;
+    NodoCancion *tail;
 
 public:
-    // Constructores
     ListaReproduccion();
-    ListaReproduccion(std::string);
-    ListaReproduccion(Cancion);
-    ListaReproduccion(Cancion, std::string);
-
-    void agregarCancion(Cancion);
-    void eliminarCancion(Cancion);
-    void saltarCancion();
-    void reproducir();
-
-    // getters
-    std::string getNombre() { return nombre; }
-    int getNumCanciones() { return numCanciones; }
-
-    // setters
-    void setNombre(std::string newName) { nombre = newName; }
+    ~ListaReproduccion();
+    void insertion(const Cancion &);
+    int search(const std::string &titulo); // Búsqueda por título de la canción
+    void update(int index, const Cancion &);
+    void deleteAt(int index);
+    std::string toStringForward() const;
+    std::string toStringBackward() const;
+    
+    friend class NodoCancion;
+    friend class Reproductor;
 };
 
-template <class T>
-ListaReproduccion<T>::ListaReproduccion()
+ListaReproduccion::ListaReproduccion()
 {
-    nombre = "Sin Titulo";
-    numCanciones = 0;
-    reproduciendo = 0;
+    size = 0;
+    head = 0;
+    tail = 0;
 }
 
-template <class T>
-ListaReproduccion<T>::ListaReproduccion(std::string name)
+ListaReproduccion::~ListaReproduccion()
 {
-    nombre = name;
-    numCanciones = 0;
-    reproduciendo = 0;
-}
-
-template <class T>
-ListaReproduccion<T>::ListaReproduccion(Cancion first)
-{
-    nombre = "Sin Título";
-    listaCanciones.push(first);
-    numCanciones = 1;
-    reproduciendo = 0;
-}
-
-template <class T>
-ListaReproduccion<T>::ListaReproduccion(Cancion first, std::string name)
-{
-    nombre = name;
-    listaCanciones.push(first);
-    numCanciones = 1;
-    reproduciendo = 0;
-}
-
-template <class T>
-void ListaReproduccion<T>::agregarCancion(Cancion next)
-{
-    listaCanciones.push(next);
-    numCanciones++;
-}
-
-template <class T>
-void ListaReproduccion<T>::eliminarCancion(Cancion eliminada)
-{
-    if (listaCanciones.front() == eliminada)
+    NodoCancion *p = head;
+    while (p != 0)
     {
-        listaCanciones.pop();
+        NodoCancion *aux = p;
+        p = p->next;
+        delete aux;
     }
-    else if (listaCanciones.back() == eliminada)
+}
+
+void ListaReproduccion::insertion(const Cancion &cancion)
+{
+    NodoCancion *newNode = new NodoCancion(cancion);
+    if (head == 0)
     {
-        listaCanciones.pop(listaCanciones.back());
+        head = tail = newNode;
     }
     else
     {
-        while (listaCanciones.front() != eliminada)
+        tail->next = newNode;
+        newNode->previous = tail;
+        tail = newNode;
+    }
+    size++;
+}
+
+int ListaReproduccion::search(const std::string &titulo)
+{
+    NodoCancion *p = head;
+    int index = 0;
+
+    while (p != 0)
+    {
+        if (p->song.getTitulo() == titulo)
         {
-            listaCanciones.push(eliminada);
-            listaCanciones.pop();
+            return index;
         }
+        p = p->next;
+        index++;
     }
-    numCanciones--;
+    return -1; // No encontrado
 }
 
-template <class T>
-void ListaReproduccion<T>::saltarCancion()
+void ListaReproduccion::update(int index, const Cancion &cancion)
 {
-    listaCanciones.pop();
+    if (index < 0 || index >= size)
+    {
+        return;
+    }
+    NodoCancion *p = head;
+    int count = 0;
+
+    while (p != 0)
+    {
+        if (count == index)
+        {
+            p->song = cancion;
+            return;
+        }
+        p = p->next;
+        count++;
+    }
 }
 
-template <class T>
-void ListaReproduccion<T>::reproducir()
+void ListaReproduccion::deleteAt(int index)
 {
-    if (numCanciones > 0)
+    if (index < 0 || index >= size)
     {
-        std::cout << "Reproduciendo " << listaCanciones.front().titulo << " - " << listaCanciones.front().artista << std::endl;
+        return;
     }
-    else
+
+    NodoCancion *p = head;
+    NodoCancion *prev = 0;
+
+    int count = 0;
+    while (p != 0)
     {
-        std::cout << "Error: " << nombre << " es una Lista de Reproduccion vacia" << std::endl;
+        if (count == index)
+        {
+            if (p == head)
+            {
+                head = head->next;
+                if (head != 0)
+                {
+                    head->previous = 0;
+                }
+                else
+                {
+                    tail = 0;
+                }
+            }
+            else if (p == tail)
+            {
+                tail = tail->previous;
+                if (tail != 0)
+                {
+                    tail->next = 0;
+                }
+            }
+            else
+            {
+                prev->next = p->next;
+                if (p->next != 0)
+                {
+                    p->next->previous = prev;
+                }
+            }
+            delete p;
+            size--;
+            return;
+        }
+        prev = p;
+        p = p->next;
+        count++;
     }
+}
+
+std::string ListaReproduccion::toStringForward() const
+{
+    std::stringstream aux;
+    NodoCancion *p = head;
+
+    aux << "[";
+    while (p != 0)
+    {
+        aux << p->song.imprimirCancion();
+        if (p->next != 0)
+        {
+            aux << " -> ";
+        }
+        p = p->next;
+    }
+    aux << "]";
+    return aux.str();
+}
+
+std::string ListaReproduccion::toStringBackward() const
+{
+    std::stringstream aux;
+    NodoCancion *p = tail;
+
+    aux << "[";
+    while (p != 0)
+    {
+        aux << p->song.imprimirCancion();
+        if (p->previous != 0)
+        {
+            aux << " <- ";
+        }
+        p = p->previous;
+    }
+    aux << "]";
+    return aux.str();
 }
 
 #endif /* ListaReproduccion_h */
