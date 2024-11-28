@@ -10,12 +10,15 @@
 
 #include "Cancion.h"
 #include "ListaReproduccion.h"
+#include "Playlist.h"
+#include "Reproductor.h"
 
 #include <string>
 #include <vector>
 #include <sstream>
 #include <cstring>
 #include <cctype>
+#include <queue>
 
 template <class T>
 class Biblioteca
@@ -23,8 +26,6 @@ class Biblioteca
 private:
     int numCanciones;
     std::vector<T> canciones;                    // Vector con canciones
-    std::vector<ListaReproduccion<T> > Playlists; // Vector con playlists
-    int untitledPlaylists;
 
     // Funciones para hacer Merge Sort
     void swap(std::vector<T> &, int, int);
@@ -45,10 +46,10 @@ public:
     void agregaCancion(Cancion);
     void eliminaCancion(int);
 
+    void reproducir();
+
     // Getter
     Cancion getCancion(int index) { return canciones[index - 1]; }
-
-    void crearPlaylist(std::string);
 
     std::string toString();
 };
@@ -275,43 +276,12 @@ void Biblioteca<T>::ordenDuracion()
 }
 
 template <class T>
-void Biblioteca<T>::crearPlaylist(std::string nameP)
+void Biblioteca<T>::reproducir()
 {
+    int opcion;
 
-    /*Si no dan un nombre crearla por omisión
-     y al final agregarle al nombre la variable
-     untitledPlaylists - 1
-     */
-    if (nameP.size() == 0)
-    {
-        untitledPlaylists++;
-
-        if (untitledPlaylists > 1)
-        {
-            ListaReproduccion<T> nueva("Sin Titulo " + std::to_string(untitledPlaylists - 1));
-            Playlists.push_back(nueva);
-        }
-        else
-        {
-            ListaReproduccion<T> nueva;
-            Playlists.push_back(nueva);
-        }
-    }
-    else
-    {
-        ListaReproduccion<T> nueva(nameP);
-        Playlists.push_back(nueva);
-    }
-
-    // Ver que se creen de forma correcta
-    std::cout << "Nueva Lista de Reproduccion:\n"
-              << Playlists.back().getNombre() << " con " << Playlists.back().getNumCanciones() << " canciones." << std::endl;
-
-    for (int i = 0; i < Playlists.size(); i++)
-    {
-        Playlists[i].reproducir();
-    }
+    Reproductor play(canciones);
+    play.reproducir();
 }
-
 
 #endif /* Biblioteca_h */
