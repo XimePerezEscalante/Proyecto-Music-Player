@@ -22,6 +22,13 @@ Para el algoritmo de merge sort se utilizaron las siguientes funciones:
 Demás funciones de Biblioteca:
 * eliminaCancion y agregaCancion: O(1) porque se usan las funciones de la biblioteca vector.
 * modifyString: O(n) porque recorre todo el string.
+ListaReproduccion:
+* insertion: O(1) porque siempre se añade al final.
+* search: O(n) porque puede que recorra todos los elementos.
+* update: O(n) porque puede que recorra todos los elementos.
+* delete at: O(n) porque puede que recorra todos los elementos.
+Reproductor:
+* siguiente / anterior / salir: O(1) porque se mueve una canción en la lista o se sale de la función.
 ## SICT0302B: Toma decisiones
 ### Implementa mecanismos para consultar información de las estructras correctos
 Se usan los getters de Cancion, friend class para acceder a los atributos privados y en el caso de mostrar información, los métodos toString().
