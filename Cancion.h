@@ -11,7 +11,6 @@
 #include <iostream>
 #include <sstream>
 
-template <class T>
 class ListaReproduccion;
 
 class Cancion
@@ -35,7 +34,7 @@ public:
 
     std::string imprimirCancion();
 
-    friend class ListaReproduccion<Cancion>;
+    friend class ListaReproduccion;
 };
 
 // Constructor por omisión
@@ -68,7 +67,7 @@ Cancion::Cancion(std::string title, std::string artist, std::string genre, float
 std::string Cancion::imprimirCancion()
 {
     std::stringstream aux;
-    aux << titulo << " - " << artista << " - " << genero << " - " << duracion;
+    aux << titulo << " - " << artista << " - " << genero << " - " << duracion << " min";
     return aux.str();
 }
 
