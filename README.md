@@ -19,3 +19,13 @@ Para el algoritmo de merge sort se utilizaron las siguientes funciones:
 * merge: O(n) porque recorre todos los elementos para compararlos y moverlos.
 * mergeSplit: O(n log n) porque se usa recursión para dividir el vector.
 * ordenArtista / ordenGenero / ordenDuracion: O(n log n) porque manda a llamar a mergeSplit, así que tienen la misma complejidad.
+Demás funciones de Biblioteca:
+* eliminaCancion y agregaCancion: O(1) porque se usan las funciones de la biblioteca vector.
+* modifyString:
+## SICT0302B: Toma decisiones
+### Implementa mecanismos para consultar información de las estructras correctos
+Se usan los getters de Cancion, friend class para acceder a los atributos privados y en el caso de mostrar información, los métodos toString().
+### Implementa mecanismos de lectura de archivos para cargar datos a las estructuras de manera correcta
+Los archivos Canciones.txt, Artistas.txt y Duraciones.txt contienen la información correspondiente de cada canción en una línea.
+### Implementa mecanismos de escritura de archivos para guardar los datos  de las estructuras de manera correcta
+En el archivo Biblioteca.txt se agregan las canciones en el último orden que haya seleccionado el usuario.
